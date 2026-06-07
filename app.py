@@ -33,10 +33,35 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+
+def apply_theme(dark: bool):
+    """Inject CSS for a dark or light appearance (default dark)."""
+    if dark:
+        bg, fg, sb, card, border = "#0e1117", "#fafafa", "#1a1d24", "#1a1d24", "#2a2f3a"
+    else:
+        bg, fg, sb, card, border = "#ffffff", "#16191f", "#f0f2f6", "#ffffff", "#d9dce1"
+    st.markdown(f"""
+    <style>
+      [data-testid="stAppViewContainer"], .stApp {{ background-color:{bg}; color:{fg}; }}
+      [data-testid="stHeader"] {{ background:{bg}; }}
+      [data-testid="stSidebar"] {{ background-color:{sb}; }}
+      [data-testid="stSidebar"] * {{ color:{fg}; }}
+      .stMarkdown, p, span, li, label, h1, h2, h3, h4, h5, h6,
+      [data-testid="stMetricValue"], [data-testid="stMetricLabel"],
+      [data-testid="stWidgetLabel"] * {{ color:{fg}; }}
+      [data-testid="stExpander"], [data-testid="stForm"],
+      div[data-testid="stVerticalBlockBorderWrapper"] > div {{ border-color:{border}; }}
+      input, textarea, [data-baseweb="input"], [data-baseweb="textarea"],
+      [data-baseweb="select"] > div {{ background-color:{card}; color:{fg}; }}
+    </style>
+    """, unsafe_allow_html=True)
+
+
 FIELDS = ["company_name", "uen", "address", "website", "owner_name",
           "contact_name", "contact_tel", "contact_email"]
 for k in FIELDS:
     st.session_state.setdefault(k, "")
+st.session_state.setdefault("theme_dark", True)
 
 
 # ============================ PAGE: GENERATOR =========================
@@ -141,6 +166,12 @@ def page_rtp_guide():
     st.title("📋 SSG RTP — Organisation Registration Guide")
     st.caption("Summary for first-time Training Providers applying for Organisation "
                "Registration (OR) to become an SSG-funded Registered Training Partner.")
+
+    RTP_URL = ("https://www.tpgateway.gov.sg/plan-courses/organisation-registration-"
+               "for-first-time-training-provider/apply-for-organisation-registration")
+    st.markdown(f"🔗 **Official source:** [SSG TPGateway — Apply for Organisation "
+                f"Registration]({RTP_URL})")
+    st.link_button("🌐 Open SSG TPGateway — Apply for Organisation Registration", RTP_URL)
 
     m1, m2, m3, m4 = st.columns(4)
     m1.metric("Application Fee", "S$545", "GST incl • non-refundable")
@@ -376,6 +407,9 @@ def page_checklist():
 st.sidebar.title("🗂️ Menu")
 page = st.sidebar.radio("Go to", ["📄 Generate SOP", "✅ Documents Checklist",
                                   "📋 SSG RTP Registration Guide"])
+st.sidebar.divider()
+dark_mode = st.sidebar.toggle("🌙 Dark mode", key="theme_dark")
+apply_theme(dark_mode)
 st.sidebar.divider()
 st.sidebar.caption("Generate a Standard Operating Procedure for SkillsFuture "
                    "Registered Training Partners, and learn how to register with SSG.")

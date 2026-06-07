@@ -14,3 +14,4 @@ __pycache__/
 
 # Generated SOP outputs (the template is committed; per-company outputs are not)
 SOP_*.docx
+!sop_template.docx
