@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+
+# OS / editor
+.DS_Store
+.playwright-mcp/
+
+# Local tooling / settings
+.claude/
+.ae/
+
+# Generated SOP outputs (the template is committed; per-company outputs are not)
+SOP_*.docx

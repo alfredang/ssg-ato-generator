@@ -1,0 +1,13 @@
+[project]
+name = "ato-generator"
+version = "0.1.0"
+description = "SOP generator for Training Providers"
+requires-python = ">=3.10"
+dependencies = [
+    "streamlit>=1.36",
+    "python-docx>=1.1.2",
+    "Pillow>=10.0",
+    "graphviz>=0.20",
+    "pypdf>=4.0",
+    "openpyxl>=3.1",
+]
