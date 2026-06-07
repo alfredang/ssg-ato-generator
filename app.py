@@ -320,67 +320,68 @@ def page_rtp_guide():
 
 
 # ================== PAGE: CHECKLIST & TEMPLATES ======================
-DOC_CHECKLIST = {
-    "1. ACRA": {
-        "desc": "Proof of legal entity registration in Singapore.",
-        "items": ["ACRA / BizFile Business Profile (Company)",
-                  "Entity name matches official registration",
-                  "Management committee list (if a registered society)"],
-    },
-    "2. Finance": {
-        "desc": "Evidence of financial health.",
-        "items": ["Latest IRAS Notice of Assessment (NOA) — positive trade income",
-                  "LLP: profit/loss allocation + partners' individual NOAs"],
-    },
-    "3. Training Facilities": {
-        "desc": "Proof of training premises and resources.",
-        "items": ["Write-up on training resources & facilities",
-                  "Photos of training and assessment rooms",
-                  "Proof of premises (lease agreement / rental invoices)"],
-    },
-    "4. Training Records": {
-        "desc": "Min. 1 year track record, active each quarter.",
-        "items": ["Training track-record write-up (use the template below)",
-                  "Invoices for past training",
-                  "Attendance records / session recordings",
-                  "Communications with trainees"],
-    },
-    "5. SOP": {
-        "desc": "Policies & Operations Manual (Stage 2).",
-        "items": ["Standard Operating Procedure — generate it in the *Generate SOP* page",
-                  "Covers Course Administration, Training Quality & Outcomes",
-                  "Sample learner registration form / contract"],
-    },
+# Mandatory documents (SSG OR submission structure) — label: help tooltip
+MANDATORY_DOCS = {
+    "Organisation Profile":
+        "ACRA / BizFile business profile — proof of legal entity registered in "
+        "Singapore (entity name must match official registration).",
+    "Training Venue":
+        "Proof of training venue — tenancy / lease agreement or rental invoices, "
+        "and the training premises address.",
+    "Training Track Record":
+        "Track-record write-up (use the .xlsx template below) — min. 1 year, "
+        "active at least once each quarter.",
+    "Proof of Training Conducted":
+        "Evidence of past training — invoices, attendance records, session "
+        "recordings and communications with trainees.",
+    "System & Capabilities":
+        "Policy & Operations Manual / SOP — generate it in the Generate SOP page "
+        "(covers Course Administration, Training Quality & Outcomes).",
+    "Adequate Facilities & Equipment":
+        "Facilities write-up plus photos of training and assessment rooms and "
+        "the equipment available.",
+}
+
+# Other documents
+OTHER_DOCS = {
+    "Notice of Assessment (NOA)":
+        "Latest IRAS Notice of Assessment showing positive trade income "
+        "(LLPs: partners' individual NOAs and profit/loss allocation).",
 }
 
 
 def page_checklist():
     st.title("✅ Supporting Documents Checklist")
-    st.caption("Track the five document sets required for SSG Organisation "
-               "Registration. Tick items as you prepare them.")
+    st.caption("Track the documents required for your SSG Organisation Registration "
+               "(OR) submission. Tick each one as you prepare it. ℹ️ Hover the help "
+               "icon for what each document needs.")
 
-    total = sum(len(v["items"]) for v in DOC_CHECKLIST.values())
     done = 0
+    total = len(MANDATORY_DOCS) + len(OTHER_DOCS)
+
+    st.subheader("📌 Mandatory Documents")
     cols = st.columns(2)
-    for idx, (cat, data) in enumerate(DOC_CHECKLIST.items()):
+    for idx, (label, help_text) in enumerate(MANDATORY_DOCS.items()):
         with cols[idx % 2]:
             with st.container(border=True):
-                st.markdown(f"### {cat}")
-                st.caption(data["desc"])
-                cat_done = 0
-                for j, item in enumerate(data["items"]):
-                    checked = st.checkbox(item, key=f"chk_{idx}_{j}")
-                    done += checked
-                    cat_done += checked
-                st.progress(cat_done / len(data["items"]),
-                            text=f"{cat_done}/{len(data['items'])} ready")
+                checked = st.checkbox(f"**{idx + 1}. {label}**", key=f"mand_{idx}",
+                                      help=help_text)
+                st.caption(help_text)
+                done += checked
+
+    st.subheader("🗂️ Other Documents")
+    for idx, (label, help_text) in enumerate(OTHER_DOCS.items()):
+        with st.container(border=True):
+            checked = st.checkbox(f"**{label}**", key=f"other_{idx}", help=help_text)
+            st.caption(help_text)
+            done += checked
 
     st.divider()
     pct = int(done / total * 100) if total else 0
     st.subheader(f"Overall readiness: {done}/{total} ({pct}%)")
     st.progress(done / total if total else 0)
     if done == total:
-        st.success("🎉 All supporting documents are ready for your OR application!")
+        st.success("🎉 All documents are ready for your OR application!")
 
     st.divider()
     st.subheader("📥 Downloadable Templates")
