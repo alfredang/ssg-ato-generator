@@ -174,10 +174,17 @@ def page_rtp_guide():
     st.link_button("🌐 Open SSG TPGateway — Apply for Organisation Registration", RTP_URL)
 
     m1, m2, m3, m4 = st.columns(4)
-    m1.metric("Application Fee", "S$545", "GST incl • non-refundable")
-    m2.metric("Onsite Assessment", "Half-day", "by SSG officers")
-    m3.metric("Track Record", "≥ 1 year", "active each quarter")
-    m4.metric("Approval Needed", "OR + CA", "both must pass")
+    m1.metric("OR Application Fee", "S$545", "GST incl • non-refundable")
+    m2.metric("Course Application Fee", "S$109–654", "CASL / WSQ • per course")
+    m3.metric("Onsite Assessment", "Half-day", "by SSG officers")
+    m4.metric("Approval Needed", "OR + CA", "both steps must pass")
+
+    st.info("**Two steps, two fees.** Becoming an SSG-funded ATO requires **(1) an "
+            "Organisation Registration (OR)** *and* **(2) a Course Application (CA)**, "
+            "submitted together. Fees are charged separately: the **OR fee (S$545)** plus a "
+            "**Course Application fee per course** — **S$109** for CASL / non-WSQ courses or "
+            "**S$654** for WSQ courses (all GST incl.). **Both the OR and the CA must be "
+            "approved** before you are registered as an SSG-funded Training Partner.")
 
     st.divider()
     st.subheader("✅ Eligibility & Core Requirements")
@@ -237,10 +244,12 @@ def page_rtp_guide():
         ("Set up Corppass", "Register a Corppass account (corppass.gov.sg / +65 6335 3530)."),
         ("Set up PayNow", "Establish a corporate PayNow account."),
         ("Compile documents", "Prepare all OR Stage 1 and Stage 2 documents."),
-        ("Submit via TPGateway", "Submit OR application with a concurrent Course Application (CA)."),
-        ("Pay OR fee", "Pay the non-refundable S$545 (GST incl.) application fee."),
+        ("Submit Component 1 — OR application", "Submit the Organisation Registration (OR) on TPGateway."),
+        ("Submit Component 2 — Course Application", "Submit a concurrent Course Application (CA) — the two components go together."),
+        ("Pay both fees", "Pay the non-refundable OR fee (S$545, GST incl.) plus the Course "
+                          "Application fee per course (S$109 CASL/non-WSQ or S$654 WSQ, GST incl.)."),
         ("Onsite assessment", "SSG conducts a half-day onsite assessment of policies vs operations."),
-        ("Approval", "Both OR and CA must be approved to register as an SSG-funded TP."),
+        ("Approval", "Both the OR and the Course Application must be approved to register as an SSG-funded TP/ATO."),
     ]
     for i, (title, desc) in enumerate(steps, 1):
         st.markdown(f"**{i}. {title}** — {desc}")
